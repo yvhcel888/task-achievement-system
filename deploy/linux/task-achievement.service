@@ -1,0 +1,27 @@
+# 任务成就系统 - systemd 服务单元（Ubuntu）
+# 安装：sudo cp task-achievement.service /etc/systemd/system/
+#       sudo systemctl daemon-reload
+#       sudo systemctl enable --now task-achievement
+# 查看：sudo systemctl status task-achievement
+# 日志：sudo journalctl -u task-achievement -f
+
+[Unit]
+Description=Task Achievement System (任务成就激励系统)
+After=network.target mysql.service
+
+[Service]
+Type=simple
+# 项目绝对路径（按实际部署位置修改）
+WorkingDirectory=/home/admin/task-achievement
+# 读取数据库等环境变量（含 MySQL 密码）
+EnvironmentFile=/home/admin/task-achievement/deploy/linux/.env
+# Node 路径：Ubuntu 24.04 apt 自带 node 18 太老，请用 NodeSource/nvm 装 Node 22 后改这里
+ExecStart=/usr/bin/node deploy/linux/linux-server.mjs
+Restart=always
+RestartSec=3
+# 安全加固
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

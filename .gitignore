@@ -1,0 +1,23 @@
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+
+# 运行时数据
+logs/
+uploads/
+models/
+
+# 环境与密钥
+.env
+.env.local
+*.env.local
+
+# 本地工具配置(勿提交)
+.hermes/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.log

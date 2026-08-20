@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+@import "tailwindcss";
+@import "@lark-apaas/client-toolkit-lite/styles.css";
+@import "tw-animate-css";
+@import "./tailwind-theme.css";
+@import "./typography.css";
+
+@layer base {
+  html {
+    font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    background-color: var(--background);
+    /* 蓝图网格背景：极淡的坐标纸纹理 */
+    background-image:
+      linear-gradient(rgba(0, 51, 160, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 51, 160, 0.035) 1px, transparent 1px),
+      linear-gradient(rgba(0, 51, 160, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 51, 160, 0.02) 1px, transparent 1px);
+    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background-color: rgba(0, 51, 160, 0.18);
+  }
+}
+
+@layer components {
+  /* 报告卡片 - 蓝图风核心视觉签名 */
+  .report-card {
+    background-color: var(--card);
+    border-top: 3px solid #0033a0;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    border-radius: 0;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .report-card:hover {
+    box-shadow: 0 10px 24px -6px rgb(0 51 160 / 0.12), 0 4px 8px -4px rgb(0 0 0 / 0.08);
+    transform: translateY(-1px);
+  }
+
+  /* 极细分隔线 */
+  .thin-border {
+    border-color: #e2e8f0;
+    border-width: 0.5px;
+    border-style: solid;
+  }
+
+  .thin-border-b {
+    border-bottom: 0.5px solid #e2e8f0;
+  }
+
+  .thin-border-r {
+    border-right: 0.5px solid #e2e8f0;
+  }
+
+  .thin-border-l {
+    border-left: 0.5px solid #e2e8f0;
+  }
+
+  .thin-border-t {
+    border-top: 0.5px solid #e2e8f0;
+  }
+
+  /* Section 编号标题 */
+  .section-label {
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #0033a0;
+  }
+
+  .section-subtitle {
+    font-size: 10px;
+    font-weight: 500;
+    color: #94a3b8;
+  }
+
+  /* KPI 标签 */
+  .kpi-label {
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+  }
+
+  .kpi-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  /* 全大写标签 */
+  .caps-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  /* 表格表头 */
+  .table-header {
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.05em;
+  }
+
+  /* Header 渐变背景 */
+  .bp-header {
+    background: linear-gradient(135deg, #001d4a 0%, #0033a0 55%, #004b93 100%);
+  }
+
+  /* Header 斜切装饰 */
+  .bp-header-skew {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.05);
+    transform: skewX(-20deg) translateX(25%);
+  }
+
+  /* Header 蓝图坐标网格 */
+  .bp-header-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  /* Header 角落刻度装饰 */
+  .bp-corner-tick {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: rgba(255, 255, 255, 0.35);
+    border-style: solid;
+    border-width: 0;
+    pointer-events: none;
+  }
+
+  /* 蓝图按钮 */
+  .bp-btn-primary {
+    background-color: #0033a0;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 0;
+    box-shadow: none;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .bp-btn-primary:hover:not(:disabled) {
+    background-color: #002580;
+    transform: translateY(-1px);
+  }
+
+  .bp-btn-primary:disabled {
+    opacity: 0.5;
+  }
+
+  /* 次级蓝图按钮 */
+  .bp-btn-outline {
+    background-color: #fff;
+    color: #0033a0;
+    border: 1px solid #cbd5e1;
+    font-weight: 700;
+    border-radius: 0;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .bp-btn-outline:hover:not(:disabled) {
+    border-color: #0033a0;
+    background-color: #f8fafc;
+  }
+
+  /* 快速添加 chips */
+  .bp-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 10px;
+    font-weight: 700;
+    color: #475569;
+    background-color: #f8fafc;
+    border: 0.5px solid #e2e8f0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+
+  .bp-chip:hover {
+    color: #0033a0;
+    border-color: #0033a0;
+    background-color: #eff6ff;
+  }
+
+  /* 任务分组标题 */
+  .bp-group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.5rem 0.3rem;
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #64748b;
+  }
+
+  .bp-group-header::after {
+    content: "";
+    flex: 1;
+    height: 0.5px;
+    background-color: #e2e8f0;
+  }
+}
+
+@layer utilities {
+  /* 自定义滚动条 */
+  .bp-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .bp-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  .bp-scrollbar::-webkit-scrollbar-thumb {
+    background: #0033a0;
+    border-radius: 3px;
+  }
+
+  /* 文本截断增强 */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* 禁用 shadcn 默认 elevate 效果（蓝图风不需要） */
+  .bp-no-elevate::after {
+    display: none !important;
+  }
+}
+
+/* 隐藏滚动条（导航栏横向滚动用） */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

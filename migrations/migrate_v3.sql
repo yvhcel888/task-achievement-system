@@ -1,0 +1,52 @@
+-- 任务成就系统 v3 迁移（幂等）：社区 + 游戏 + 目标奖励 + 自定义角色卡
+-- 执行：mysql -uroot -p < migrate_v3.sql
+
+USE rxy;
+
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user_id VARCHAR(100) NOT NULL,
+  content VARCHAR(500) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_chat_time (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS wall_messages (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user_id VARCHAR(100) NOT NULL,
+  content VARCHAR(500) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_wall_time (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS announcements (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  user_id VARCHAR(100) NOT NULL,
+  title VARCHAR(100) NOT NULL,
+  content VARCHAR(1000) NOT NULL,
+  pinned TINYINT NOT NULL DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS goals (
+  id VARCHAR(40) PRIMARY KEY,
+  user_id VARCHAR(100) NOT NULL,
+  title VARCHAR(200) NOT NULL,
+  reward VARCHAR(200) NOT NULL,
+  target_tasks INT NOT NULL DEFAULT 0,
+  status VARCHAR(20) NOT NULL DEFAULT 'active',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  achieved_at TIMESTAMP NULL,
+  INDEX idx_goals_user (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS personas (
+  id VARCHAR(40) PRIMARY KEY,
+  user_id VARCHAR(100) NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  emoji VARCHAR(10) NOT NULL DEFAULT 'bot',
+  system_prompt TEXT NOT NULL,
+  description VARCHAR(200) NOT NULL DEFAULT '',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_personas_user (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
