@@ -33,7 +33,18 @@
 - **图表**: echarts(按需懒加载分包)
 - **动画**: framer-motion + GSAP
 - **后端**: Node.js(原生 http 模块,零框架)
-- **数据库**: MySQL 8.0
+- **数据库**: MySQL 8.0(默认) / SQLite 无数据库版(better-sqlite3,零依赖)
+
+## 🗄️ 双存储引擎
+
+| | MySQL 版(默认) | SQLite 版(无 MySQL) |
+|---|---|---|
+| 启动 | `node deploy/linux/linux-server.mjs` | `DB_ENGINE=sqlite node deploy/linux/linux-server.mjs` |
+| 数据 | MySQL 数据库(rxy) | 单文件 `data/app.sqlite`(自动建表,零配置) |
+| 适用 | 多用户/生产部署 | 个人使用/轻量部署/无 MySQL 环境 |
+| 表结构 | migrations/*.sql | 自动创建(全量 schema 内置) |
+
+两种引擎共享同一套 API 与业务代码,切换只需一个环境变量。
 - **桌宠**: Webmeji(开源 Shimeji 风格)
 
 ## 🚀 快速开始

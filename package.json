@@ -46,6 +46,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tanstack/react-query": "^5.101.4",
     "@types/three": "^0.185.4",
+    "better-sqlite3": "^13.0.3",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

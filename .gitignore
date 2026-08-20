@@ -21,3 +21,4 @@ models/
 .DS_Store
 Thumbs.db
 *.log
+data/

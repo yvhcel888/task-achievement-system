@@ -15,7 +15,6 @@
  *  - 会话：256 位随机 token，7 天过期，仅存服务端内存
  *  - 数据：按 user_id 隔离，接口必须携带有效 token
  */
-import mysql from 'mysql2/promise'
 import { scryptSync, randomBytes, timingSafeEqual } from 'node:crypto'
 import { handleMusicApi } from './music-api.mjs'
 import { handleAiApi } from './ai-api.mjs'
@@ -24,18 +23,29 @@ import { handleBiliApi } from './bili-api.mjs'
 import { handleMSearchApi } from './msearch-api.mjs'
 
 // ============ 数据库连接池 ============
-// 默认值适配 Windows 本机（root/123456）；Linux 部署通过环境变量覆盖：
-//   DB_HOST / DB_PORT / DB_USER / DB_PASSWORD / DB_NAME
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || '127.0.0.1',
-  port: Number(process.env.DB_PORT || 3306),
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '123456',
-  database: process.env.DB_NAME || 'rxy',
-  connectionLimit: 5,
-  waitForConnections: true,
-  charset: 'utf8mb4',
-})
+// 双引擎:
+//   默认   → MySQL(mysql2),默认值适配 Windows 本机(root/123456),Linux 部署通过环境变量覆盖:
+//           DB_HOST / DB_PORT / DB_USER / DB_PASSWORD / DB_NAME
+//   DB_ENGINE=sqlite → 无 MySQL 版(SQLite 文件存储,零依赖,数据在 ./data/app.sqlite)
+const DB_ENGINE = (process.env.DB_ENGINE || 'mysql').toLowerCase()
+let pool
+if (DB_ENGINE === 'sqlite') {
+  const { pool: sqlitePool, closeStore } = await import('./sqlite-store.mjs')
+  pool = sqlitePool
+  process.on('exit', closeStore)
+} else {
+  const mysql = await import('mysql2/promise')
+  pool = mysql.createPool({
+    host: process.env.DB_HOST || '127.0.0.1',
+    port: Number(process.env.DB_PORT || 3306),
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '123456',
+    database: process.env.DB_NAME || 'rxy',
+    connectionLimit: 5,
+    waitForConnections: true,
+    charset: 'utf8mb4',
+  })
+}
 
 // ============ 密码哈希（scrypt + 随机盐） ============
 function hashPassword(password) {

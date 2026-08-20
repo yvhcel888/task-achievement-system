@@ -33,7 +33,18 @@ A feature-rich task & achievement motivation platform: complete tasks to earn ex
 - **Charts**: echarts (lazy-loaded chunks)
 - **Animation**: framer-motion + GSAP
 - **Backend**: Node.js (native http module, zero framework)
-- **Database**: MySQL 8.0
+- **Database**: MySQL 8.0 (default) / SQLite (better-sqlite3, zero dependency)
+
+## 🗄️ Dual Storage Engines
+
+| | MySQL (default) | SQLite (no MySQL) |
+|---|---|---|
+| Start | `node deploy/linux/linux-server.mjs` | `DB_ENGINE=sqlite node deploy/linux/linux-server.mjs` |
+| Data | MySQL database (rxy) | Single file `data/app.sqlite` (auto-created, zero config) |
+| Use case | Multi-user / production | Personal / lightweight / no MySQL environment |
+| Schema | migrations/*.sql | Auto-created (full schema built-in) |
+
+Both engines share the same API and business code — switch with one environment variable.
 - **Desktop pet**: Webmeji (open-source Shimeji style)
 
 ## 🚀 Quick Start
