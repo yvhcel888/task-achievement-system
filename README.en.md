@@ -126,7 +126,6 @@ MIT
 ## 👤 Authors
 
 - Author: **yvhcel888**
-- Co-author: **QingXue-Han**
 
 ## 🙏 Credits
 
